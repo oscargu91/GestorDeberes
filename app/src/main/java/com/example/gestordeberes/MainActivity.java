@@ -3,6 +3,7 @@ package com.example.gestordeberes;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -29,11 +31,20 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
         });
+        // Configurar el botón
+        FloatingActionButton button = findViewById(R.id.btAdd);
+        button.setOnClickListener(v -> {
+            // Mostrar el diálogo personalizado
+            DialogFragment dialogFragment = new DialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), "Dialogo");
+        });
+    }
+}
 
 
-
-//      Crear un dialogo
+//    Crear un dialogo
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setTitle("Título")
 //                .setMessage("Mensaje del diálogo")
@@ -56,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
 //        datePickerDialog.show();
 
 
-
-
 //      Crear un reloj para establecer la hora
 //        TimePickerDialog timePickerDialog = new TimePickerDialog(
 //                this,
@@ -69,13 +78,8 @@ public class MainActivity extends AppCompatActivity {
 //        timePickerDialog.show();
 
 
-
-
 //        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
 //        bottomSheetDialog.setContentView(R.layout.dialogo_add_deberes);
 //        bottomSheetDialog.show();
 
 
-    }
-
-}
