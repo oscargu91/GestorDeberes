@@ -64,10 +64,10 @@
                 android:text="Cancelar" />
 
             <Button
-                android:id="@+id/btBorrar"
+                android:id="@+id/btGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Borrar" />
+                android:text="Guardar" />
         </LinearLayout>
     </LinearLayout>
 

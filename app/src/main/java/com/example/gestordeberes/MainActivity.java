@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
 
         });
-        // Configurar el botón
+        // Configurar el botón +
         FloatingActionButton button = findViewById(R.id.btAdd);
         button.setOnClickListener(v -> {
             // Mostrar el diálogo personalizado
