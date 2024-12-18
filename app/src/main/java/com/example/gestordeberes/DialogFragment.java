@@ -3,6 +3,7 @@ package com.example.gestordeberes;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,36 +33,31 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = requireActivity().getLayoutInflater();
-       /* View view = */
 
+        //Creo la view y la inflo con el dialogo.
         View view = layoutInflater.inflate(R.layout.dialogo_add_deberes, null);
+
         descripcion= view.findViewById(R.id.editDescripcion);
         fecha=view.findViewById(R.id.editFecha);
         hora=view.findViewById(R.id.editHora);
 
         fecha.setOnClickListener(v -> showDatePickerDialog());
-
+        hora.setOnClickListener(v -> showTimePickerDialog());
 
 
         builder.setView(layoutInflater.inflate(R.layout.dialogo_add_deberes, null));
         builder.setView(view);
 
-       /* // Configurar botones
+        return builder.create();
+
+       /* // Configurar botones predefinidos del dialogo
         builder.setPositiveButton("Aceptar", (dialog, which) -> {
            //Meter logica de cuando pulsamos aceptar
-
         });
-
         builder.setNegativeButton("Cancelar", (dialog, which) -> {
 
             dialog.dismiss();
         });*/
-
-        // Crear y devolver el diálogo
-        return builder.create();
-
-
-
     }
 
     public void showDatePickerDialog(){
@@ -76,6 +72,21 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         datePickerDialog.show();
 
     }
+
+    //Método para crear un reloj para establecer la hora
+    public void showTimePickerDialog() {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                getActivity(),
+                (view, hourOfDay, minute) -> {
+                    // Formatea la hora seleccionada y la muestra en el campo EditText
+                    String selectedTime = String.format("%02d:%02d", hourOfDay, minute);
+                    hora.setText(selectedTime);
+                },
+                12, 0, true // Hora inicial, Minuto inicial, formato 24h
+        );
+        timePickerDialog.show();
+    }
+
 }
 
 
