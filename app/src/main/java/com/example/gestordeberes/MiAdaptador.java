@@ -59,9 +59,21 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     public int getItemCount() {
         return deberList.size(); // Devuelve el tamaño de la lista de datos
     }
+
     // Método para agregar un nuevo deber y notificar al adapter
     public void agregarDeber(Deber deber) {
-        deberList.add(deber);
-        notifyItemInserted(deberList.size() - 1);
+        if (deber != null) { // Asegura que el deber no sea null
+            deberList.add(deber);
+            notifyDataSetChanged();
+        }
+    }
+
+    // Método para actualizar la lista completa de deberes
+    public void actualizarDeberes(List<Deber> nuevosDeberes) {
+        if (nuevosDeberes != null && !nuevosDeberes.isEmpty()) {
+            deberList.clear();
+            deberList.addAll(nuevosDeberes);
+            notifyDataSetChanged(); // Notifica que la lista completa ha cambiado
+        }
     }
 }
