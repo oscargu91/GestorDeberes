@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(v -> {
             // Mostrar el diálogo para añadir deberes
             DialogFragment dialogFragment = new DialogFragment();
-            //dialogFragment.setTargetFragment(null, 0);  // No es necesario establecer un targetFragment si no se usa
             dialogFragment.show(getSupportFragmentManager(), "Dialogo");
         });
 
@@ -43,15 +42,37 @@ public class MainActivity extends AppCompatActivity {
         // Recibir los deberes desde el diálogo
         getSupportFragmentManager().setFragmentResultListener("deberResult", this, (requestKey, result) -> {
             if (result.containsKey("deberParcelable")) {
-                Deber nuevoDeber = result.getParcelable("deberParcelable");
-                if (nuevoDeber != null) {
-                    adapter.agregarDeber(nuevoDeber);
+                Deber tareaEditada = result.getParcelable("deberParcelable");
 
-                    Log.d("MainActivity", "Deber agregado: " + nuevoDeber.getAsignatura());
+
+                if (tareaEditada != null) {
+                    // Verificar si es una tarea nueva o editada
+                    if (!deberes.contains(tareaEditada)) {
+                        // Si no está en la lista, agregarla como una tarea nueva
+                        deberes.add(tareaEditada);
+                        adapter.notifyItemInserted(deberes.size() - 1); // Notificar al adaptador que se ha insertado un nuevo item
+                    } else {
+                        // Si la tarea ya existe, actualizarla
+                        actualizarTareaEnLista(tareaEditada);
+                    }
+
+                    Log.d("MainActivity", "Tarea agregada o editada: " + tareaEditada.getAsignatura());
                 } else {
-                    Toast.makeText(this, "No se pudo agregar el deber. Datos incompletos.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "No se pudo agregar o editar la tarea. Datos incompletos.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
+    }
+    public void actualizarTareaEnLista(Deber tareaEditada) {
+        for (int i = 0; i < deberes.size(); i++) {
+            Deber deber = deberes.get(i);
+            // Verificar si el ID o cualquier atributo único es el mismo (suponiendo que tienes un ID o atributo único en Deber)
+            if (deber.getDescripcion().equals(tareaEditada.getDescripcion())) {
+                deberes.set(i, tareaEditada); // Reemplazar la tarea antigua por la editada
+                adapter.notifyItemChanged(i); // Notificar al adaptador que se ha actualizado el item
+                break;
+            }
+        }
     }
 }

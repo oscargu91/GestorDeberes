@@ -24,7 +24,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     private EditText hora;
     private Spinner spinner;
     private Button btnGuardar;
-
+    private Deber tareaEditar;  // Almacenamos el Deber a editar
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -48,6 +48,20 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        // Obtener la tarea a editar (si existe)
+        if (getArguments() != null) {
+            tareaEditar = getArguments().getParcelable("tarea_editar");
+            if (tareaEditar != null) {
+                // Rellenar los campos con los datos de la tarea a editar
+                descripcion.setText(tareaEditar.getDescripcion());
+                fecha.setText(tareaEditar.getFechaEntrega());
+                hora.setText(tareaEditar.getHora());
+                // Ajustar el spinner al valor de la tarea a editar
+                int position = adapter.getPosition(tareaEditar.getAsignatura());
+                spinner.setSelection(position);
+            }
+        }
 
         // Eventos
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -76,12 +90,20 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
                 return;
             }
 
-            // Crear objeto Deber (implementa Parcelable)
-            Deber nuevoDeber = new Deber(asignatura, descripcionTarea, fechaEntrega, horaEntrega, false);
+            // Si estamos editando, actualizamos la tarea existente
+            if (tareaEditar != null) {
+                tareaEditar.setAsignatura(asignatura);
+                tareaEditar.setDescripcion(descripcionTarea);
+                tareaEditar.setFechaEntrega(fechaEntrega);
+                tareaEditar.setHora(horaEntrega);
+            } else {
+                // Si es una nueva tarea, la creamos
+                tareaEditar = new Deber(asignatura, descripcionTarea, fechaEntrega, horaEntrega, false);
+            }
 
             // Enviar los datos al fragmento o actividad llamante usando Bundle
             Bundle result = new Bundle();
-            result.putParcelable("deberParcelable", nuevoDeber);
+            result.putParcelable("deberParcelable", tareaEditar);
             getParentFragmentManager().setFragmentResult("deberResult", result);
 
             dismiss();
@@ -107,5 +129,15 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
                 12, 0, true
         );
         timePickerDialog.show();
+    }
+    // Método para crear el DialogFragment con la tarea a editar
+    public static DialogFragment newInstance(Deber tarea) {
+        DialogFragment fragment = new DialogFragment();
+        Bundle args = new Bundle();
+        if (tarea != null) {
+            args.putParcelable("tarea_editar", tarea);
+        }
+        fragment.setArguments(args);
+        return fragment;
     }
 }

@@ -1,9 +1,18 @@
 package com.example.gestordeberes;
 
+import static com.example.gestordeberes.R.*;
+import static com.example.gestordeberes.R.id.*;
+import com.example.gestordeberes.R;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -42,6 +51,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     }
 
     // Este método enlaza los datos del Deber con las vistas correspondientes
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Obtiene el objeto Deber correspondiente a la posición
@@ -52,6 +62,42 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
         holder.tvDescripcion.setText(deberActual.getDescripcion());
         holder.tvFecha.setText(deberActual.getFechaEntrega());
         holder.tvHora.setText(deberActual.getHora());
+
+        // Configura un click listener para el itemView
+        holder.itemView.setOnClickListener(v -> {
+
+                    // Mostrar un PopupMenu al pulsar en el item
+                    PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
+                    popupMenu.inflate(R.menu.menu_item_opciones);
+
+                    // Manejar las opciones del PopupMenu
+                    popupMenu.setOnMenuItemClickListener(item -> {
+
+                        if (item.getItemId() == op_editar) {
+                            Toast.makeText(v.getContext(), "Editar: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
+                            // Mostrar el diálogo de edición con la tarea seleccionada
+                            DialogFragment fragment = DialogFragment.newInstance(deberActual);
+                            fragment.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), "editarTarea");
+
+                        return true;
+                        }
+                        if (item.getItemId() == op_eliminar) {
+                            deberList.remove(position);
+                            notifyItemRemoved(position);
+                            Toast.makeText(v.getContext(), "Eliminado: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                        if (item.getItemId() == op_completar) {
+
+                            Toast.makeText(v.getContext(), "Completada: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                    return false;
+                    });
+
+
+                        popupMenu.show();
+                    });
     }
 
     // Este método devuelve el número total de items en la lista
