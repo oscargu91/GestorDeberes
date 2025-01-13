@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
     // Constructor que recibe la lista de datos
     public MiAdaptador(List<Deber> deberList) {
         this.deberList = deberList;
+
     }
 
     // Clase ViewHolder que contiene las vistas de cada item
@@ -57,6 +59,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
         // Obtiene el objeto Deber correspondiente a la posición
         Deber deberActual = deberList.get(position);
 
+
         // Asigna los valores de los objetos Deber a los TextViews
         holder.tvAsignatura.setText(deberActual.getAsignatura());
         holder.tvDescripcion.setText(deberActual.getDescripcion());
@@ -88,7 +91,6 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
                             return true;
                         }
                         if (item.getItemId() == op_completar) {
-
                             Toast.makeText(v.getContext(), "Completada: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
                             return true;
                         }

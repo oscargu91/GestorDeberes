@@ -3,6 +3,7 @@ package com.example.gestordeberes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Deber> deberes = new ArrayList<>();
     private MiAdaptador adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Crear un nuevo adaptador si no existe
         if (adapter == null) {
+
             adapter = new MiAdaptador(deberes);
             recyclerView.setAdapter(adapter);
         }
