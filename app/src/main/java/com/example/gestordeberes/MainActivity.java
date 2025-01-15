@@ -1,6 +1,7 @@
 package com.example.gestordeberes;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -22,6 +23,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Instancio base de datos y lectura y escritura
+        BaseDeDatos bd = new BaseDeDatos(this);
+        SQLiteDatabase bdLectura = bd.getReadableDatabase();
+        SQLiteDatabase bdEscribir = bd.getWritableDatabase();
+
+        int id;
+        String asignatura;
+        String descripcion;
+        String fechaEntrega;
+        String hora;
+        Boolean estadoTarea;
+
 
         // Configurar el botón de añadir (+)
         FloatingActionButton button = findViewById(R.id.btAdd);

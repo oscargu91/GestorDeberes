@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 public class Deber implements Parcelable {
 
+    private int id;
     private String asignatura;
     private String descripcion;
     private String fechaEntrega;
@@ -14,6 +15,15 @@ public class Deber implements Parcelable {
     private Boolean estadoTarea;
 
     public Deber(String asignatura, String descripcion, String fechaEntrega, String hora, Boolean estadoTarea) {
+
+        this.asignatura = asignatura;
+        this.descripcion = descripcion;
+        this.fechaEntrega = fechaEntrega;
+        this.hora = hora;
+        this.estadoTarea = estadoTarea;
+    }
+    public Deber(int id,String asignatura, String descripcion, String fechaEntrega, String hora, Boolean estadoTarea) {
+        this.id= id;
         this.asignatura = asignatura;
         this.descripcion = descripcion;
         this.fechaEntrega = fechaEntrega;
@@ -22,6 +32,7 @@ public class Deber implements Parcelable {
     }
 
     protected Deber(Parcel in) {
+        id = in.readInt();
         asignatura = in.readString();
         descripcion = in.readString();
         fechaEntrega = in.readString();
@@ -42,6 +53,13 @@ public class Deber implements Parcelable {
         }
     };
 
+    public int getId(){
+        return id;
+    }
+
+    public int setId(){
+        return id;
+    }
     public String getAsignatura() {
         return asignatura;
     }

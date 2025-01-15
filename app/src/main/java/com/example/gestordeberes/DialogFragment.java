@@ -80,6 +80,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         hora.setOnClickListener(v -> showTimePickerDialog());
 
         btnGuardar.setOnClickListener(v -> {
+
             String asignatura = spinner.getSelectedItem().toString();
             String descripcionTarea = descripcion.getText().toString().trim();
             String fechaEntrega = fecha.getText().toString().trim();
@@ -98,6 +99,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
                 tareaEditar.setHora(horaEntrega);
             } else {
                 // Si es una nueva tarea, la creamos
+
                 tareaEditar = new Deber(asignatura, descripcionTarea, fechaEntrega, horaEntrega, false);
             }
 
