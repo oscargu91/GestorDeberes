@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,8 +16,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Deber> deberes = new ArrayList<>();
+   // private List<Deber> deberes = new ArrayList<>(); al usar viewModel ahora usamos listaViewModel
     private MiAdaptador adapter;
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    private ListaDeberesViewModel listaViewModel;
 
 
     @Override
@@ -36,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         String hora;
         Boolean estadoTarea;
 
-
+        //Inicializo el viewModel aqui, en el OnCreate siempre.
+        listaViewModel= new ViewModelProvider(this).get(ListaDeberesViewModel.class);
+    listaViewModel=setLista(bd.get);
         // Configurar el botón de añadir (+)
         FloatingActionButton button = findViewById(R.id.btAdd);
         button.setOnClickListener(v -> {
@@ -45,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
             dialogFragment.show(getSupportFragmentManager(), "Dialogo");
         });
 
-        // Inicializar el RecyclerView
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Crear un nuevo adaptador si no existe
