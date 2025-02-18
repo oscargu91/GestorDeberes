@@ -1,5 +1,5 @@
 package com.example.gestordeberes;
-
+import com.example.gestordeberes.R;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import gal.cifpacarballeira.unidad4_tarea7gestordeberes.R;
+
 
 public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
 
