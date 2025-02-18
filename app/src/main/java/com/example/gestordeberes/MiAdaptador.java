@@ -1,8 +1,6 @@
 package com.example.gestordeberes;
 
-import static com.example.gestordeberes.R.*;
-import static com.example.gestordeberes.R.id.*;
-import com.example.gestordeberes.R;
+
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import gal.cifpacarballeira.unidad4_tarea7gestordeberes.R;
 
 public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
 
@@ -76,7 +76,7 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
                     // Manejar las opciones del PopupMenu
                     popupMenu.setOnMenuItemClickListener(item -> {
 
-                        if (item.getItemId() == op_editar) {
+                        if (item.getItemId() == R.id.op_editar) {
                             Toast.makeText(v.getContext(), "Editar: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
                             // Mostrar el diálogo de edición con la tarea seleccionada
                             DialogFragment fragment = DialogFragment.newInstance(deberActual);
@@ -84,13 +84,13 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
 
                         return true;
                         }
-                        if (item.getItemId() == op_eliminar) {
+                        if (item.getItemId() == R.id.op_eliminar) {
                             deberList.remove(position);
                             notifyItemRemoved(position);
                             Toast.makeText(v.getContext(), "Eliminado: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
                             return true;
                         }
-                        if (item.getItemId() == op_completar) {
+                        if (item.getItemId() == R.id.op_completar) {
                             Toast.makeText(v.getContext(), "Completada: " + deberActual.getAsignatura(), Toast.LENGTH_SHORT).show();
                             return true;
                         }

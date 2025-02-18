@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import gal.cifpacarballeira.unidad4_tarea7gestordeberes.R;
+
 public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
     private EditText descripcion;
